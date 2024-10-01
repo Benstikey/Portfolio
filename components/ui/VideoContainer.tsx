@@ -20,26 +20,22 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
   desktopMarginBottom = "md:mb-0",
 }) => {
   const [hovered, setHovered] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const containerRef = useRef<HTMLAnchorElement | null>(null);
 
   useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setIsVisible(true);
-            if (videoRef.current) {
-              videoRef.current.play().catch((error) => {
-                console.error("Autoplay failed:", error);
-              });
-            }
+            video.play().catch((error) => {
+              console.error("Autoplay failed:", error);
+            });
           } else {
-            setIsVisible(false);
-            if (videoRef.current) {
-              videoRef.current.pause();
-            }
+            video.pause();
           }
         });
       },
@@ -66,7 +62,7 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
 
   const handleMouseLeave = () => {
     setHovered(false);
-    if (videoRef.current && isVisible) {
+    if (videoRef.current && videoRef.current.paused) {
       videoRef.current.play().catch((error) => {
         console.error("Autoplay failed:", error);
       });
@@ -88,15 +84,17 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
       <div className="relative">
         <video
           ref={videoRef}
-          src={videoSrc}
           className={`w-full h-full object-cover transition-all duration-300 ${
             hovered ? "blur-sm" : ""
           }`}
           loop
           muted
           playsInline
-          preload="metadata"
-        />
+          preload="auto"
+        >
+          <source src={videoSrc} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
       </div>
       {hovered && (
         <h2 className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-white font-bold">
