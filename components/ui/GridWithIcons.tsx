@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import CustomIcon from "@/components/ui/CustomIcon"; // Import your CustomIcon component
+import CustomIcon from "@/components/ui/CustomIcon";
 
 interface StackItem {
   name: string;
@@ -18,10 +18,19 @@ const GridWithIcons: React.FC<GridWithIconsProps> = ({ stacks, iconSize = 64 }) 
     items,
   }));
 
+  const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({});
+
+  const toggleCategory = (category: string) => {
+    setExpandedCategories(prev => ({
+      ...prev,
+      [category]: !prev[category]
+    }));
+  };
+
   return (
     <div className="space-y-8">
       {categorizedIcons.map(({ category, items }) => {
-        const [showMore, setShowMore] = useState(false);
+        const showMore = expandedCategories[category] || false;
         const shouldShowMore = items.length > 4;
 
         return (
@@ -37,10 +46,7 @@ const GridWithIcons: React.FC<GridWithIconsProps> = ({ stacks, iconSize = 64 }) 
                   key={idx}
                   className="border rounded-lg p-3 flex items-center transition-all duration-300 ease-in-out hover:bg-gray-100"
                 >
-                  {/* Custom Icon */}
                   <CustomIcon iconSlug={item.iconSlug} size={iconSize} className="mr-4" />
-
-                  {/* Text Container */}
                   <div className="flex flex-col text-left">
                     <p className="text-gray-900">{item.name}</p>
                     <p className="text-sm text-gray-500">{item.description}</p>
@@ -54,15 +60,15 @@ const GridWithIcons: React.FC<GridWithIconsProps> = ({ stacks, iconSize = 64 }) 
               className={`grid gap-2 transition-all duration-500 ease-in-out md:grid-cols-2 ${
                 showMore ? "max-h-screen" : "max-h-0 overflow-hidden"
               }`}
-              style={{ marginTop: '8px' }} // Add margin-top to create space between revealed tools and additional tools
+              style={{ marginTop: '8px' }}
             >
               {items.slice(4).map((item, idx) => (
                 <div
                   key={idx}
-                  className={`border rounded-lg p-4 flex items-center transition-opacity duration-500 ease-in-out opacity-0 transform ${
+                  className={`border rounded-lg p-4 flex items-center transition-opacity duration-500 ease-in-out ${
                     showMore ? "opacity-100" : "opacity-0"
                   } hover:bg-gray-100`}
-                  style={{ transitionDelay: `${idx * 100}ms` }} // Stagger the reveal
+                  style={{ transitionDelay: `${idx * 100}ms` }}
                 >
                   <CustomIcon iconSlug={item.iconSlug} size={iconSize} className="mr-4" />
                   <div className="flex flex-col text-left">
@@ -76,7 +82,7 @@ const GridWithIcons: React.FC<GridWithIconsProps> = ({ stacks, iconSize = 64 }) 
             {/* Arrow Button for See More */}
             {shouldShowMore && (
               <div
-                onClick={() => setShowMore((prev) => !prev)}
+                onClick={() => toggleCategory(category)}
                 className="flex justify-center mt-2 cursor-pointer"
               >
                 <svg

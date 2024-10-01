@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useId, useState } from "react";
+import React, { useEffect, useId, useState, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRef } from "react";
 import { cn } from "@/lib/utils";
@@ -13,17 +13,14 @@ export const Cover = ({
   className?: string;
 }) => {
   const [hovered, setHovered] = useState(false);
-
   const ref = useRef<HTMLDivElement>(null);
-
   const [containerWidth, setContainerWidth] = useState(0);
   const [beamPositions, setBeamPositions] = useState<number[]>([]);
 
-  useEffect(() => {
+  const updateDimensions = useCallback(() => {
     if (ref.current) {
-      setContainerWidth(ref.current?.clientWidth ?? 0);
-
-      const height = ref.current?.clientHeight ?? 0;
+      setContainerWidth(ref.current.clientWidth);
+      const height = ref.current.clientHeight;
       const numberOfBeams = Math.floor(height / 10); // Adjust the divisor to control the spacing
       const positions = Array.from(
         { length: numberOfBeams },
@@ -31,14 +28,20 @@ export const Cover = ({
       );
       setBeamPositions(positions);
     }
-  }, [ref.current]);
+  }, []);
+
+  useEffect(() => {
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, [updateDimensions]);
 
   return (
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       ref={ref}
-      className="relative hover:bg-neutral-900  group/cover inline-block dark:bg-neutral-900 bg-neutral-100 px-2 py-2  transition duration-200 rounded-sm"
+      className="relative hover:bg-neutral-900 group/cover inline-block dark:bg-neutral-900 bg-neutral-100 px-2 py-2 transition duration-200 rounded-sm"
     >
       <AnimatePresence>
         {hovered && (
