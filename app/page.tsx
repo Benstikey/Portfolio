@@ -205,7 +205,7 @@ export default function Home() {
             />
           </Card>
         </div>
-        <PrimaryButton text="Let's work together" scrollTo="contact-form" />
+        <PrimaryButton text="Let&apos;s work together" scrollTo="contact-form" />
       </div>
 
       {/* My Work Section */}
@@ -306,7 +306,7 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-4">
           <HobbyCard
             title="Chess"
-            description="Try your hand at refuting one of my chess gambits. If you manage to do so, you'll earn a special discount on my services!"
+            description="Try your hand at refuting one of my chess gambits. If you manage to do so, you&apos;ll earn a special discount on my services!"
             linkText="Lichess"
             linkUrl="https://lichess.org/@/WassimBenchekroun"
             logo={<CustomIcon iconSlug="lichess" size={32} />}
@@ -314,7 +314,7 @@ export default function Home() {
           />
           <HobbyCard
             title="Running"
-            description="Take a quick jog with me—I'm training for a half marathon. Drop me kudos if you're up for joining!"
+            description="Take a quick jog with me—I&apos;m training for a half marathon. Drop me kudos if you&apos;re up for joining!"
             linkText="Strava"
             linkUrl="https://strava.app.link/UBRMj3NJPMb"
             logo={<CustomIcon iconSlug="strava" size={32} />}
@@ -322,7 +322,7 @@ export default function Home() {
           />
           <HobbyCard
             title="Movies"
-            description="Share your thoughts on Interstellar before we start your project—let's set the stage with a quick movie discussion."
+            description="Share your thoughts on Interstellar before we start your project—let&apos;s set the stage with a quick movie discussion."
             linkText="Letterboxd"
             linkUrl="https://letterboxd.com/WassimBen/"
             logo={<CustomIcon iconSlug="letterboxd" size={32} />}
@@ -338,8 +338,8 @@ export default function Home() {
       >
         <h4>~ reach out</h4>
         <p className="text-balance">
-          I'm always excited to team up on creative projects with inspiring
-          people. Need a helping hand? I've got two ready to go!
+          I&apos;m always excited to team up on creative projects with inspiring
+          people. Need a helping hand? I&apos;ve got two ready to go!
         </p>
         <ContactForm />
         <div className="w-full flex justify-end mt-8">
