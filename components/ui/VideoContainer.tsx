@@ -25,8 +25,6 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
     const playVideo = async () => {
       if (videoRef.current) {
         try {
-          // Some browsers require user interaction before playing,
-          // so we use both autoplay attribute and play() method
           await videoRef.current.play();
         } catch (error) {
           console.error("Autoplay failed:", error);
@@ -36,25 +34,24 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
 
     playVideo();
 
-    // Add event listener for visibility change
+    const handleVisibilityChange = () => {
+      if (videoRef.current) {
+        if (document.hidden) {
+          videoRef.current.pause();
+        } else {
+          videoRef.current.play().catch(error => {
+            console.error("Resume playback failed:", error);
+          });
+        }
+      }
+    };
+
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
-
-  const handleVisibilityChange = () => {
-    if (videoRef.current) {
-      if (document.hidden) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play().catch(error => {
-          console.error("Resume playback failed:", error);
-        });
-      }
-    }
-  };
 
   const marginClasses = `${mobileMarginTop} ${mobileMarginBottom} ${desktopMarginTop} ${desktopMarginBottom}`;
 
@@ -63,7 +60,7 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
       href={linkHref}
       target="_blank"
       rel="noopener noreferrer"
-      className={`relative w-full rounded-xl overflow-hidden shadow-custom ${marginClasses} ${className}`}
+      className={`relative block w-full rounded-xl overflow-hidden shadow-custom ${marginClasses} ${className}`}
     >
       <video
         ref={videoRef}
@@ -73,6 +70,7 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
         playsInline
         autoPlay
         preload="auto"
+        poster={videoSrc}
       >
         <source src={videoSrc} type="video/mp4" />
         Your browser does not support the video tag.
