@@ -20,16 +20,30 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
   desktopMarginBottom = "md:mb-0",
 }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     const playVideo = async () => {
       if (videoRef.current) {
         try {
-          // Attempt autoplay on all devices
           await videoRef.current.play();
+          setIsVideoPlaying(true);
         } catch (error) {
           console.error("Autoplay failed:", error);
+          setIsVideoPlaying(false);
         }
       }
     };
@@ -40,9 +54,11 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
       if (videoRef.current) {
         if (document.hidden) {
           videoRef.current.pause();
+          setIsVideoPlaying(false);
         } else {
-          videoRef.current.play().catch(error => {
+          videoRef.current.play().then(() => setIsVideoPlaying(true)).catch(error => {
             console.error("Resume playback failed:", error);
+            setIsVideoPlaying(false);
           });
         }
       }
@@ -71,14 +87,22 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
+      {isMobile && !isVideoPlaying && (
+        <img 
+          src={`${videoSrc}#t=0.001`} 
+          alt="Video thumbnail" 
+          className="w-full h-full object-cover"
+        />
+      )}
       <video
         ref={videoRef}
-        className={`w-full h-full object-cover transition-all duration-300 ${isHovered ? "blur-sm" : ""}`}
+        className={`w-full h-full object-cover transition-all duration-300 ${isHovered ? "blur-sm" : ""} ${isMobile && !isVideoPlaying ? "hidden" : ""}`}
         loop
         muted
         playsInline
         autoPlay
         preload="auto"
+        poster={`${videoSrc}#t=0.001`}
       >
         <source src={videoSrc} type="video/mp4" />
         Your browser does not support the video tag.
