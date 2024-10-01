@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 
 interface VideoContainerProps {
   videoSrc: string;
@@ -19,13 +19,14 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
   desktopMarginTop = "md:mt-0",
   desktopMarginBottom = "md:mb-0",
 }) => {
-  const [hovered, setHovered] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     const playVideo = async () => {
       if (videoRef.current) {
         try {
+          // Some browsers require user interaction before playing,
+          // so we use both autoplay attribute and play() method
           await videoRef.current.play();
         } catch (error) {
           console.error("Autoplay failed:", error);
@@ -34,21 +35,24 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
     };
 
     playVideo();
+
+    // Add event listener for visibility change
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
   }, []);
 
-  const handleMouseEnter = () => {
-    setHovered(true);
+  const handleVisibilityChange = () => {
     if (videoRef.current) {
-      videoRef.current.pause();
-    }
-  };
-
-  const handleMouseLeave = () => {
-    setHovered(false);
-    if (videoRef.current) {
-      videoRef.current.play().catch(error => {
-        console.error("Resume playback failed:", error);
-      });
+      if (document.hidden) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play().catch(error => {
+          console.error("Resume playback failed:", error);
+        });
+      }
     }
   };
 
@@ -60,30 +64,19 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
       target="_blank"
       rel="noopener noreferrer"
       className={`relative w-full rounded-xl overflow-hidden shadow-custom ${marginClasses} ${className}`}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
     >
-      <div className="relative">
-        <video
-          ref={videoRef}
-          className={`w-full h-full object-cover transition-all duration-300 ${
-            hovered ? "blur-sm" : ""
-          }`}
-          loop
-          muted
-          playsInline
-          autoPlay
-          preload="auto"
-        >
-          <source src={videoSrc} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      </div>
-      {hovered && (
-        <h2 className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-white font-bold">
-          Visit the website
-        </h2>
-      )}
+      <video
+        ref={videoRef}
+        className="w-full h-full object-cover"
+        loop
+        muted
+        playsInline
+        autoPlay
+        preload="auto"
+      >
+        <source src={videoSrc} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
     </a>
   );
 };
