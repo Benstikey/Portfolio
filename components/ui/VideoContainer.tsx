@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 interface VideoContainerProps {
   videoSrc: string;
@@ -20,19 +20,56 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
   desktopMarginBottom = "md:mb-0",
 }) => {
   const [hovered, setHovered] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const containerRef = useRef<HTMLAnchorElement | null>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            if (videoRef.current) {
+              videoRef.current.play().catch((error) => {
+                console.error("Autoplay failed:", error);
+              });
+            }
+          } else {
+            setIsVisible(false);
+            if (videoRef.current) {
+              videoRef.current.pause();
+            }
+          }
+        });
+      },
+      { threshold: 0.1 } // Trigger when 10% of the element is visible
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current);
+      }
+    };
+  }, []);
 
   const handleMouseEnter = () => {
     setHovered(true);
     if (videoRef.current) {
-      videoRef.current.pause(); // Pause the video
+      videoRef.current.pause();
     }
   };
 
   const handleMouseLeave = () => {
     setHovered(false);
-    if (videoRef.current) {
-      videoRef.current.play(); // Resume the video
+    if (videoRef.current && isVisible) {
+      videoRef.current.play().catch((error) => {
+        console.error("Autoplay failed:", error);
+      });
     }
   };
 
@@ -40,6 +77,7 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
 
   return (
     <a
+      ref={containerRef}
       href={linkHref}
       target="_blank"
       rel="noopener noreferrer"
@@ -55,8 +93,9 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
             hovered ? "blur-sm" : ""
           }`}
           loop
-          autoPlay
           muted
+          playsInline
+          preload="metadata"
         />
       </div>
       {hovered && (
