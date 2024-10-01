@@ -21,36 +21,19 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
 }) => {
   const [hovered, setHovered] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const containerRef = useRef<HTMLAnchorElement | null>(null);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            video.play().catch((error) => {
-              console.error("Autoplay failed:", error);
-            });
-          } else {
-            video.pause();
-          }
-        });
-      },
-      { threshold: 0.1 } // Trigger when 10% of the element is visible
-    );
-
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
-
-    return () => {
-      if (containerRef.current) {
-        observer.unobserve(containerRef.current);
+    const playVideo = async () => {
+      if (videoRef.current) {
+        try {
+          await videoRef.current.play();
+        } catch (error) {
+          console.error("Autoplay failed:", error);
+        }
       }
     };
+
+    playVideo();
   }, []);
 
   const handleMouseEnter = () => {
@@ -62,9 +45,9 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
 
   const handleMouseLeave = () => {
     setHovered(false);
-    if (videoRef.current && videoRef.current.paused) {
-      videoRef.current.play().catch((error) => {
-        console.error("Autoplay failed:", error);
+    if (videoRef.current) {
+      videoRef.current.play().catch(error => {
+        console.error("Resume playback failed:", error);
       });
     }
   };
@@ -73,7 +56,6 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
 
   return (
     <a
-      ref={containerRef}
       href={linkHref}
       target="_blank"
       rel="noopener noreferrer"
@@ -90,6 +72,7 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
           loop
           muted
           playsInline
+          autoPlay
           preload="auto"
         >
           <source src={videoSrc} type="video/mp4" />
