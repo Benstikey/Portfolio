@@ -63,7 +63,7 @@ export default function Home() {
     ],
   };
 
-  const LogoB = require('@/assets/icons/Logo-Dark-Blue.svg').default;
+  const LogoB = require('@/public/Logo-Dark-Blue.svg').default;
 
   const ChessKnightIcon: React.FC<{ size?: number }> = ({ size = 150 }) => (
     <svg
