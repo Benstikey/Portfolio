@@ -306,3 +306,27 @@ a {
   transform: translate(-50%, -50%);
   transition: left 0.1s ease, top 0.1s ease;
 }
+
+@keyframes waveAnimation {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.wave-skeleton {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -50%;
+  bottom: -50%;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 100%
+  );
+  animation: waveAnimation 2s ease-in-out infinite;
+}
