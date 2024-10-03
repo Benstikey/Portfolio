@@ -82,17 +82,19 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
             objectFit="cover"
           />
         )}
-        <video
-          ref={videoRef}
-          className={`absolute top-0 left-0 w-full h-full object-cover transition-all duration-300 md:group-hover:blur-sm ${isMobile ? 'hidden' : ''}`}
-          loop
-          muted
-          playsInline
-          preload="metadata"
-        >
-          <source src={videoSrc} type="video/webm" />
-          Your browser does not support the video tag.
-        </video>
+        {!isMobile && (
+          <video
+            ref={videoRef}
+            className="absolute top-0 left-0 w-full h-full object-cover transition-all duration-300 md:group-hover:blur-sm"
+            loop
+            muted
+            playsInline
+            preload="metadata"
+          >
+            <source src={videoSrc} type="video/webm" />
+            Your browser does not support the video tag.
+          </video>
+        )}
         <canvas ref={canvasRef} className="hidden" />
         <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
           <h2 className="text-white font-bold text-xl">Visit the website</h2>
