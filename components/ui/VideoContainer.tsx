@@ -83,7 +83,7 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
             poster={`${videoSrc}#t=0.001`}
             onLoadedData={() => setIsLoading(false)}
           >
-            <source src={videoSrc} type="video/mp4" />
+            <source src={videoSrc} type="video/webm" />
           </video>
         )}
         <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
