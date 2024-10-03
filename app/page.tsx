@@ -1,11 +1,10 @@
 "use client";
-import React, { useRef } from "react";
+import React from "react";
 import { useMediaQuery } from "react-responsive";
 
 import DesignIcon from "@/assets/icons/design-icon.svg";
 import DevelopmentIcon from "@/assets/icons/magic-wand-icon.svg";
 import DesignDevIcon from "@/assets/icons/des-dev-icon.svg";
-import LogoB from "@/assets/icons/Logo-Dark-Blue.svg";
 
 import TextScrambleComponent from "@/components/ui/TextScramble";
 
@@ -35,90 +34,36 @@ export default function Home() {
   const words = ["developer", "designer", "expert"];
   const stacks = {
     Design: [
-      { name: "Figma", description: "Design Tool", iconSlug: "figma" },
-      { name: "Adobe XD", description: "Design Tool", iconSlug: "adobexd" },
+      { name: "Figma", description: "Design Tool", iconSlug: "figma", url: "https://www.figma.com/" },
+      { name: "Adobe XD", description: "Design Tool", iconSlug: "adobexd", url: "https://adobexdplatform.com/" },
     ],
     Development: [
-      { name: "Webflow", description: "Website Builder", iconSlug: "webflow" },
-      { name: "Framer", description: "Website Builder", iconSlug: "framer" },
-      {
-        name: "Wordpress",
-        description: "Website Builder",
-        iconSlug: "wordpress",
-      },
-      {
-        name: "Next.js",
-        description: "React Framework",
-        iconSlug: "nextdotjs",
-      },
-      {
-        name: "React",
-        description: "Front-end JavaScript Library",
-        iconSlug: "react",
-      },
-      {
-        name: "Tailwind CSS",
-        description: "CSS Framework",
-        iconSlug: "tailwindcss",
-      },
-      { name: "HTML5", description: "Markup Language", iconSlug: "html5" },
-      { name: "CSS3", description: "Style Sheet Language", iconSlug: "css3" },
-      {
-        name: "JavaScript",
-        description: "Programming Language",
-        iconSlug: "javascript",
-      },
-      {
-        name: "TypeScript",
-        description: "Superset of JavaScript",
-        iconSlug: "typescript",
-      },
+      { name: "Webflow", description: "Website Builder", iconSlug: "webflow", url: "https://webflow.com/" },
+      { name: "Framer", description: "Website Builder", iconSlug: "framer", url: "https://www.framer.com/" },
+      { name: "Wordpress", description: "Website Builder", iconSlug: "wordpress", url: "https://wordpress.org/" },
+      { name: "Next.js", description: "React Framework", iconSlug: "nextdotjs", url: "https://nextjs.org/" },
+      { name: "React", description: "Front-end JavaScript Library", iconSlug: "react", url: "https://reactjs.org/" },
+      { name: "Tailwind CSS", description: "CSS Framework", iconSlug: "tailwindcss", url: "https://tailwindcss.com/" },
+      { name: "HTML5", description: "Markup Language", iconSlug: "html5", url: "https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5" },
+      { name: "CSS3", description: "Style Sheet Language", iconSlug: "css3", url: "https://developer.mozilla.org/en-US/docs/Web/CSS" },
+      { name: "JavaScript", description: "Programming Language", iconSlug: "javascript", url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript" },
+      { name: "TypeScript", description: "Superset of JavaScript", iconSlug: "typescript", url: "https://www.typescriptlang.org/" },
     ],
     Productivity: [
-      {
-        name: "Slack",
-        description: "Collaboration & Messaging",
-        iconSlug: "slack",
-      },
-      {
-        name: "ClickUp",
-        description: "Project Management & Productivity",
-        iconSlug: "clickup",
-      },
-      {
-        name: "Linear",
-        description: "Issue Tracking & Project Management",
-        iconSlug: "linear",
-      },
-      {
-        name: "Notion",
-        description: "All-in-One Workspace & Note-Taking",
-        iconSlug: "notion",
-      },
-      {
-        name: "GitHub",
-        description: "Code Hosting & Collaboration",
-        iconSlug: "github",
-      },
+      { name: "Slack", description: "Collaboration & Messaging", iconSlug: "slack", url: "https://slack.com/" },
+      { name: "ClickUp", description: "Project Management & Productivity", iconSlug: "clickup", url: "https://clickup.com/" },
+      { name: "Linear", description: "Issue Tracking & Project Management", iconSlug: "linear", url: "https://linear.app/" },
+      { name: "Notion", description: "All-in-One Workspace & Note-Taking", iconSlug: "notion", url: "https://www.notion.so/" },
+      { name: "GitHub", description: "Code Hosting & Collaboration", iconSlug: "github", url: "https://github.com/" },
     ],
     "Automation & AI": [
-      {
-        name: "Zapier",
-        description: "Automation & Workflow Integration",
-        iconSlug: "zapier",
-      },
-      {
-        name: "OpenAI",
-        description: "AI Models & Language Processing",
-        iconSlug: "openai",
-      },
-      {
-        name: "Perplexity",
-        description: "AI-Powered Answer Engine",
-        iconSlug: "perplexity",
-      },
+      { name: "Zapier", description: "Automation & Workflow Integration", iconSlug: "zapier", url: "https://zapier.com/" },
+      { name: "OpenAI", description: "AI Models & Language Processing", iconSlug: "openai", url: "https://openai.com/" },
+      { name: "Perplexity", description: "AI-Powered Answer Engine", iconSlug: "perplexity", url: "https://www.perplexity.ai/" },
     ],
   };
+
+  const LogoB = require('@/assets/icons/Logo-Dark-Blue.svg').default;
 
   const ChessKnightIcon: React.FC<{ size?: number }> = ({ size = 150 }) => (
     <svg

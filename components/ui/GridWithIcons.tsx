@@ -5,6 +5,7 @@ interface StackItem {
   name: string;
   description: string;
   iconSlug: string;
+  url: string;  // New property for the link
 }
 
 interface GridWithIconsProps {
@@ -27,6 +28,25 @@ const GridWithIcons: React.FC<GridWithIconsProps> = ({ stacks, iconSize = 64 }) 
     }));
   };
 
+  const renderStackItem = (item: StackItem, idx: number, showMore: boolean = true) => (
+    <a
+      key={idx}
+      href={item.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`border rounded-lg p-4 flex items-center transition-all duration-300 ease-in-out hover:bg-gray-100 ${
+        showMore ? "opacity-100" : "opacity-0"
+      }`}
+      style={showMore ? { transitionDelay: `${idx * 100}ms` } : {}}
+    >
+      <CustomIcon iconSlug={item.iconSlug} size={iconSize} className="mr-4" />
+      <div className="flex flex-col text-left">
+        <p className="text-gray-900">{item.name}</p>
+        <p className="text-sm text-gray-500">{item.description}</p>
+      </div>
+    </a>
+  );
+
   return (
     <div className="space-y-8">
       {categorizedIcons.map(({ category, items }) => {
@@ -35,51 +55,21 @@ const GridWithIcons: React.FC<GridWithIconsProps> = ({ stacks, iconSize = 64 }) 
 
         return (
           <div key={category}>
-            {/* Category Title */}
             <h2 className="mb-4">{category}</h2>
 
-            {/* Icon Grid Container */}
             <div className="grid gap-2 md:grid-cols-2">
-              {/* Initially visible items */}
-              {items.slice(0, 4).map((item, idx) => (
-                <div
-                  key={idx}
-                  className="border rounded-lg p-3 flex items-center transition-all duration-300 ease-in-out hover:bg-gray-100"
-                >
-                  <CustomIcon iconSlug={item.iconSlug} size={iconSize} className="mr-4" />
-                  <div className="flex flex-col text-left">
-                    <p className="text-gray-900">{item.name}</p>
-                    <p className="text-sm text-gray-500">{item.description}</p>
-                  </div>
-                </div>
-              ))}
+              {items.slice(0, 4).map((item, idx) => renderStackItem(item, idx))}
             </div>
 
-            {/* Revealing Section for Additional Items */}
             <div
               className={`grid gap-2 transition-all duration-500 ease-in-out md:grid-cols-2 ${
                 showMore ? "max-h-screen" : "max-h-0 overflow-hidden"
               }`}
               style={{ marginTop: '8px' }}
             >
-              {items.slice(4).map((item, idx) => (
-                <div
-                  key={idx}
-                  className={`border rounded-lg p-4 flex items-center transition-opacity duration-500 ease-in-out ${
-                    showMore ? "opacity-100" : "opacity-0"
-                  } hover:bg-gray-100`}
-                  style={{ transitionDelay: `${idx * 100}ms` }}
-                >
-                  <CustomIcon iconSlug={item.iconSlug} size={iconSize} className="mr-4" />
-                  <div className="flex flex-col text-left">
-                    <p className="text-gray-900">{item.name}</p>
-                    <p className="text-sm text-gray-500">{item.description}</p>
-                  </div>
-                </div>
-              ))}
+              {items.slice(4).map((item, idx) => renderStackItem(item, idx, showMore))}
             </div>
 
-            {/* Arrow Button for See More */}
             {shouldShowMore && (
               <div
                 onClick={() => toggleCategory(category)}
