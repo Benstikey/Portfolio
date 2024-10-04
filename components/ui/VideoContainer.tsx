@@ -23,7 +23,6 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [isMobile, setIsMobile] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const [posterUrl, setPosterUrl] = useState<string | null>(null);
 
   useEffect(() => {
@@ -49,7 +48,6 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
         canvas.height = video.videoHeight;
         canvas.getContext('2d')?.drawImage(video, 0, 0, canvas.width, canvas.height);
         setPosterUrl(canvas.toDataURL('image/jpeg'));
-        setIsLoading(false);
 
         if (!isMobile) {
           video.play().catch(error => {
@@ -64,16 +62,9 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
 
   const marginClasses = `${mobileMarginTop} ${mobileMarginBottom} ${desktopMarginTop} ${desktopMarginBottom}`;
 
-  const Skeleton = () => (
-    <div className="absolute inset-0 bg-gray-200 overflow-hidden">
-      <div className="wave-skeleton"></div>
-    </div>
-  );
-
   return (
     <div className={`relative w-full rounded-xl overflow-hidden shadow-custom ${marginClasses} ${className} group`}>
       <div className="relative w-full pt-[125%]">
-        {isLoading && <Skeleton />}
         {posterUrl && (
           <Image
             src={posterUrl}

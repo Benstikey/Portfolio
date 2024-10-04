@@ -48,7 +48,7 @@ const GridWithIcons: React.FC<GridWithIconsProps> = ({ stacks, iconSize = 64 }) 
   );
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-4">
       {categorizedIcons.map(({ category, items }) => {
         const showMore = expandedCategories[category] || false;
         const shouldShowMore = items.length > 4;

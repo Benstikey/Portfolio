@@ -2,6 +2,8 @@
 import React from "react";
 import { useMediaQuery } from "react-responsive";
 
+import SideNav from '@/components/ui/SideNav';
+
 import DesignIcon from "@/assets/icons/design-icon.svg";
 import DevelopmentIcon from "@/assets/icons/magic-wand-icon.svg";
 import DesignDevIcon from "@/assets/icons/des-dev-icon.svg";
@@ -90,9 +92,11 @@ export default function Home() {
   );
 
   return (
-    <main className="max-w-[824px] mx-auto flex flex-col px-4 sm:px-8 md:px-8 bg-white scroll-smooth">
+    <>
+    <SideNav />
+    <main className="max-w-[824px] mx-auto flex flex-col px-4 sm:px-8 md:px-8 md:gap-40 py-40 bg-white scroll-smooth">
       {/* Header */}
-      <div className="flex-col justify-center min-h-fit md:min-h-screen py-16 md:py-0 items-start gap-4 sm:gap-8 inline-flex">
+      <div id="header" className="flex-col justify-center min-h-fit md:py-0 items-start gap-4 sm:gap-8 inline-flex">
         {/* LP Icon */}
         <div className="relative w-20 h-20 rounded-lg shadow-[1px_2px_5px_0px_rgba(0,0,0,0.2)] flex-col justify-center items-center inline-flex gradient-border">
           <div className="p-2 pr-3 rounded-md flex justify-center items-center">
@@ -108,7 +112,7 @@ export default function Home() {
       </div>
 
       {/* Services Section */}
-      <div className="flex-col min-h-fit md:min-h-screen py-16 md:py-0 justify-center items-start gap-8 inline-flex">
+      <div id="services" className="flex-col min-h-fit py-16 md:py-0 justify-center items-start gap-8 inline-flex">
         <h4>~ I can help you with</h4>
         <div className="flex flex-col lg:flex-row items-center justify-center w-full gap-5">
           <Card
@@ -154,7 +158,7 @@ export default function Home() {
       </div>
 
       {/* My Work Section */}
-      <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-full sm:w-[98vw] min-h-fit sm:min-h-screen left-0 sm:left-1/2 sm:-translate-x-1/2 relative py-16 sm:py-0">
+      <div id="work" className="flex flex-col sm:flex-row justify-center items-center gap-4 w-full sm:w-[98vw] left-0 sm:left-1/2 sm:-translate-x-1/2 relative py-16 sm:py-0 sm:-my-24">
         {" "}
         <VideoContainer
           mobileMarginTop="mt-0"
@@ -199,12 +203,12 @@ export default function Home() {
       </div>
 
       {/* TLDR Section */}
-      <div className="z-10 flex min-h-[5rem] items-center justify-center bg-white dark:bg-black">
+      <div id="tldr" className="z-10 flex min-h-[5rem] items-center justify-center bg-white dark:bg-black">
         <TextReveal text="I do branding, UI&UX design and web development at warp&nbsp;speed" />
       </div>
 
       {/* Stack Section */}
-      <div className="flex-col min-h-[100vh] justify-center items-start gap-6 inline-flex py-16">
+      <div id="stack" className="flex-col justify-center items-start pb-16 md:pb-0 gap-6 inline-flex">
         <h4>~ stack I use</h4>
         <div className="w-full">
           <GridWithIcons stacks={stacks} iconSize={40} />
@@ -212,7 +216,7 @@ export default function Home() {
       </div>
 
       {/* Side Projects Section */}
-      <div className="flex flex-col min-h-fit md:min-h-screen py-16 md:py-0 justify-center items-start gap-6">
+      <div id="projects" className="flex flex-col min-h-fit py-16 md:py-0 justify-center items-start gap-6">
         <h4>~ side projects</h4>
         <ExpandableComponent
           icon={<Book className="w-full h-full text-blue-500" />}
@@ -246,7 +250,7 @@ export default function Home() {
       </div>
 
       {/* Hobbies Section */}
-      <div className="flex flex-col min-h-fit md:min-h-screen py-16 md:py-0 justify-center items-start gap-6">
+      <div id="hobbies" className="flex flex-col min-h-fit py-16 md:py-0 justify-center items-start gap-6">
         <h4>~ stuff I enjoy</h4>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-4">
           <HobbyCard
@@ -279,7 +283,7 @@ export default function Home() {
       {/* Footer Section */}
       <div
         id="contact-form"
-        className="flex flex-col min-h-fit md:min-h-screen py-16 md:py-0 justify-center items-start gap-6"
+        className="flex flex-col min-h-fit py-16 md:py-0 justify-center items-start gap-6"
       >
         <h4>~ reach out</h4>
         <p className="text-balance">
@@ -313,5 +317,6 @@ export default function Home() {
         </div>
       </div>
     </main>
+  </>
   );
 }
