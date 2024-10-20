@@ -16,6 +16,7 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [posterUrl, setPosterUrl] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -27,23 +28,33 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
   }, []);
 
   useEffect(() => {
-    const video = videoRef.current;
-    const canvas = canvasRef.current;
+    const generatePoster = async () => {
+      setIsLoading(true);
+      const video = document.createElement('video');
+      video.crossOrigin = 'anonymous';
+      video.src = videoSrc;
 
-    if (video && canvas) {
       video.addEventListener('loadeddata', () => {
         video.currentTime = 0.1; // Set to a frame shortly after the start
       });
 
       video.addEventListener('seeked', () => {
+        const canvas = document.createElement('canvas');
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         canvas.getContext('2d')?.drawImage(video, 0, 0, canvas.width, canvas.height);
-        setPosterUrl(canvas.toDataURL('image/jpeg'));
+        const posterDataUrl = canvas.toDataURL('image/jpeg');
+        setPosterUrl(posterDataUrl);
+        setIsLoading(false);
       });
 
       video.load();
-    }
+    };
+
+    generatePoster().catch(error => {
+      console.error("Error generating poster:", error);
+      setIsLoading(false);
+    });
   }, [videoSrc]);
 
   const handleMouseEnter = () => {
@@ -66,14 +77,20 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <div className="relative w-full pt-[125%]">
+      <div className="relative w-full pt-[125%] bg-gray-200">
+        {isLoading && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="text-gray-500">Loading...</span>
+          </div>
+        )}
         {posterUrl && (
           <Image
             src={posterUrl}
             alt="Video Poster"
             layout="fill"
             objectFit="cover"
-            priority={isMobile} // Prioritize loading on mobile
+            priority={true}
+            onError={() => console.error("Failed to load poster image")}
           />
         )}
         {!isMobile && (
@@ -89,7 +106,6 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
             Your browser does not support the video tag.
           </video>
         )}
-        <canvas ref={canvasRef} className="hidden" />
         <a
           href={linkHref}
           target="_blank"
