@@ -13,10 +13,8 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
   className = "",
 }) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [posterUrl, setPosterUrl] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -29,32 +27,30 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
 
   useEffect(() => {
     const generatePoster = async () => {
-      setIsLoading(true);
       const video = document.createElement('video');
       video.crossOrigin = 'anonymous';
       video.src = videoSrc;
 
-      video.addEventListener('loadeddata', () => {
-        video.currentTime = 0.1; // Set to a frame shortly after the start
-      });
+      return new Promise<string>((resolve) => {
+        video.addEventListener('loadeddata', () => {
+          video.currentTime = 0.1; // Set to a frame shortly after the start
+        });
 
-      video.addEventListener('seeked', () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        canvas.getContext('2d')?.drawImage(video, 0, 0, canvas.width, canvas.height);
-        const posterDataUrl = canvas.toDataURL('image/jpeg');
-        setPosterUrl(posterDataUrl);
-        setIsLoading(false);
-      });
+        video.addEventListener('seeked', () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          canvas.getContext('2d')?.drawImage(video, 0, 0, canvas.width, canvas.height);
+          resolve(canvas.toDataURL('image/jpeg'));
+        });
 
-      video.load();
+        video.load();
+      });
     };
 
-    generatePoster().catch(error => {
-      console.error("Error generating poster:", error);
-      setIsLoading(false);
-    });
+    generatePoster()
+      .then(setPosterUrl)
+      .catch(error => console.error("Error generating poster:", error));
   }, [videoSrc]);
 
   const handleMouseEnter = () => {
@@ -78,20 +74,18 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
       onMouseLeave={handleMouseLeave}
     >
       <div className="relative w-full pt-[125%] bg-gray-200">
-        {isLoading && (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-gray-500">Loading...</span>
-          </div>
-        )}
-        {posterUrl && (
+        {posterUrl ? (
           <Image
             src={posterUrl}
-            alt="Video Poster"
+            alt="Video Thumbnail"
             layout="fill"
             objectFit="cover"
             priority={true}
-            onError={() => console.error("Failed to load poster image")}
           />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="text-gray-500">Loading...</span>
+          </div>
         )}
         {!isMobile && (
           <video
