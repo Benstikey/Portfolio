@@ -171,7 +171,7 @@ export default function Home() {
       <ScrollReveal>
       <div id="work" className="flex flex-col min-h-fit justify-center items-start gap-6">
         <h4>~ my work (hover to play, click to visit)</h4>
-        <div className="w-full h-auto overflow-x-auto scrollbar-hide py-16 sm:py-0">
+        <div className="w-full h-auto overflow-x-auto scrollbar-hide">
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-2 w-full sm:w-max h-full">
             <VideoContainer
               videoSrc="/videos/banfana_vid.webm"

@@ -73,6 +73,7 @@ const VideoContainer: React.FC<VideoContainerProps> = ({
             alt="Video Poster"
             layout="fill"
             objectFit="cover"
+            priority={isMobile} // Prioritize loading on mobile
           />
         )}
         {!isMobile && (
