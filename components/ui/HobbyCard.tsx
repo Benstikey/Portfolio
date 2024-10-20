@@ -24,9 +24,9 @@ const HobbyCard: React.FC<HobbyCardProps> = ({
   return (
     <div className={cn("flex flex-col items-center gap-2 group", className)}>
       {/* Card */}
-      <div className="relative border border-gray-200 rounded-lg p-5 flex flex-col flex-grow justify-start w-full gap-3 bg-white shadow-sm transition-all duration-300 hover:shadow-md overflow-hidden">
+      <div className="relative border border-neutral-200 rounded-lg p-5 flex flex-col flex-grow justify-start w-full gap-3 bg-white shadow-sm transition-all duration-300 hover:shadow-md overflow-hidden">
         <div className="flex flex-col gap-2 relative z-10">
-          <h2>{title}</h2>
+          <h2 className="font-normal">{title}</h2>
           <p>{description}</p>
         </div>
         
@@ -39,19 +39,19 @@ const HobbyCard: React.FC<HobbyCardProps> = ({
       {/* External Box with Logo and Link */}
       <a
         href={linkUrl}
-        className="border border-gray-200 rounded-lg px-4 py-3 flex justify-between items-center w-full hover:bg-gray-50 transition-all duration-300 group"
+        className="border border-neutral-200 rounded-lg px-4 py-3 flex justify-between items-center w-full hover:bg-neutral-50 transition-all duration-300 group"
         target="_blank"
         rel="noopener noreferrer"
       >
         <div className="flex items-center gap-3">
           {/* Logo */}
-          <div className="text-gray-600 transition-colors duration-300 group-hover:text-gray-800">
+          <div className="text-neutral-600 transition-colors duration-300 group-hover:text-neutral-800">
             {logo}
           </div>
           {/* Link Text */}
-          <h3 className="group-hover:text-gray-900 transition-colors duration-300">{linkText}</h3>
+          <h3 className="group-hover:text-neutral-900 transition-colors duration-300">{linkText}</h3>
         </div>
-        <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition-colors duration-300" />
+        <ExternalLink className="w-4 h-4 text-neutral-400 group-hover:text-neutral-600 transition-colors duration-300" />
       </a>
     </div>
   );

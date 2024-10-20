@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --background: 241, 245, 249;
+    --background: 255, 255, 255;
     --foreground: 0, 0, 0;
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -172,7 +172,7 @@ h1 {
   font-weight: 500; /* Medium weight */
   font-size: 40px;
   line-height: 100%;
-  color: #334155;
+  color: #2e2e2e;
 }
 
 h2 {
@@ -180,35 +180,35 @@ h2 {
   font-weight: 600; /* SemiBold weight */
   font-size: 20px;
   line-height: 100%;
-  color: #334155;
+  color: #2e2e2e;
 }
 
 h3 {
   font-family: 'Satoshi', sans-serif;
   font-weight: normal; /* Regular weight */
   font-size: 18px;
-  color: #334155;
+  color: #2e2e2e;
 }
 
 h4 {
   font-family: 'Satoshi', sans-serif;
   font-weight: 500; /* Medium weight */
   font-size: 14px;
-  color: #334155;
+  color: #707070;
 }
 
 p {
   font-family: 'Satoshi', sans-serif;
   font-weight: normal; /* Regular weight */
   font-size: 16px;
-  color: #475569;
+  color: #2e2e2e;
 }
 
 a {
   font-family: 'Satoshi', sans-serif;
   font-weight: normal; /* Regular weight */
   font-size: 16px;
-  color: #475569;
+  color: #2e2e2e;
 }
 
 .gradient-border {
@@ -316,17 +316,10 @@ a {
   }
 }
 
-.wave-skeleton {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: -50%;
-  bottom: -50%;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(255, 255, 255, 0.3) 50%,
-    transparent 100%
-  );
-  animation: waveAnimation 2s ease-in-out infinite;
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
 }

@@ -56,7 +56,7 @@ export default function ContactForm() {
     <form onSubmit={handleSubmit} className="w-full space-y-4">
       <div className="flex space-x-4">
         <div className="flex-1">
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="name" className="block text-sm font-medium text-neutral-700">
             Name
           </label>
           <input
@@ -65,12 +65,12 @@ export default function ContactForm() {
             value={formData.name}
             onChange={handleChange}
             required
-            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full px-4 py-2 border border-neutral-300 rounded-md shadow-sm focus:ring-neutral-500 focus:border-neutral-500 sm:text-sm"
             placeholder="Name"
           />
         </div>
         <div className="flex-1">
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="email" className="block text-sm font-medium text-neutral-700">
             Email
           </label>
           <input
@@ -79,13 +79,13 @@ export default function ContactForm() {
             value={formData.email}
             onChange={handleChange}
             required
-            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full px-4 py-2 border border-neutral-300 rounded-md shadow-sm focus:ring-neutral-500 focus:border-neutral-500 sm:text-sm"
             placeholder="Email"
           />
         </div>
       </div>
       <div>
-        <label htmlFor="message" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="message" className="block text-sm font-medium text-neutral-700">
           Message
         </label>
         <textarea
@@ -93,7 +93,7 @@ export default function ContactForm() {
           value={formData.message}
           onChange={handleChange}
           required
-          className="mt-1 block w-full h-32 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          className="mt-1 block w-full h-32 px-4 py-2 border border-neutral-300 rounded-md shadow-sm focus:ring-neutral-500 focus:border-neutral-500 sm:text-sm"
           placeholder="I need help with..."
         ></textarea>
       </div>

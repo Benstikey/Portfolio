@@ -26,8 +26,8 @@ export const TextRevealByWord: FC<TextRevealByWordProps> = ({
         className={
           "sticky top-0 mx-auto flex flex-col h-[50%] items-start justify-center bg-transparent gap-8"
         }
-      >
-        <h4>~ tldr?</h4>
+      >       
+        <h4>~ tldr?</h4>       
         <h2
           ref={targetRef}
           className={

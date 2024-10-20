@@ -89,7 +89,7 @@ const ExpandableComponent: React.FC<ExpandableComponentProps> = ({
     ref: componentRef,
     onMouseEnter: handleMouseEnter,
     onMouseLeave: handleMouseLeave,
-    className: `w-full flex flex-col items-start justify-start gap-4 border-b border-black/10 transition-all duration-500 ease-in-out relative ${link && isHovered && !isMobile ? 'cursor-none' : ''}`,
+    className: `w-full flex flex-col items-start justify-start gap-4 border-b border-neutral-200 transition-all duration-500 ease-in-out relative ${link && isHovered && !isMobile ? 'cursor-none' : ''}`,
   };
 
   const content = (
@@ -103,16 +103,16 @@ const ExpandableComponent: React.FC<ExpandableComponentProps> = ({
         {/* Title and Subtitle */}
         <div className="flex flex-col w-full gap-2">
           <h2 className="font-normal">{title}</h2>
-          <p className="text-gray-500">{subtitle}</p>
+          <p>{subtitle}</p>
         </div>
 
         {/* Dot and Text */}
-        <div className="flex items-center flex-shrink-0 bg-white gap-2 border rounded-3xl px-4 py-1">
+        <div className="flex items-center flex-shrink-0 gap-2 border border-neutral-200 rounded-3xl px-4 py-1">
           <div
             className="w-1 h-1 rounded-full"
             style={{ backgroundColor: dotColor }}
           ></div>
-          <p className="font-medium text-sm text-gray-700 mb-[2px]">{statusText}</p>
+          <p className="font-medium text-sm text-neutral-600 mb-[2px]">{statusText}</p>
         </div>
       </div>
 
@@ -120,7 +120,7 @@ const ExpandableComponent: React.FC<ExpandableComponentProps> = ({
       <div className={`mt-0 ml-0 md:max-w-xl md:ml-16 transition-all duration-500 ease-in-out 
         ${isMobile ? 'block opacity-100 max-h-[1000px]' : 
           isExpanded ? 'opacity-100 max-h-[1000px]' : 'opacity-0 max-h-0 overflow-hidden'}`}>
-        <p className="text-sm text-gray-700 mb-2 max-w-[90%]">{description}</p>
+        <p className="text-sm text-neutral-700 mb-2 max-w-[90%]">{description}</p>
         {stack && stack.length > 0 && (
           <div className="flex flex-wrap gap-3 mt-3 mb-4">
             {stack.map((iconSlug, index) => (
@@ -140,16 +140,16 @@ const ExpandableComponent: React.FC<ExpandableComponentProps> = ({
             transition: 'transform 0.1s ease-out, opacity 0.2s ease-out',
           }}
         >
-          <div className="bg-white p-2 rounded-full border border-gray-300">
-            <ExternalLink className="w-4 h-4 text-gray-500" />
+          <div className="bg-white p-2 rounded-full border border-neutral-200">
+            <ExternalLink className="w-4 h-4 text-neutral-500" />
           </div>
         </div>
       )}
 
       {/* Fixed External Link Icon for Mobile */}
       {link && isMobile && (
-        <div className="absolute bottom-4 right-0 bg-white p-2 rounded-full border border-gray-300">
-          <ExternalLink className="w-4 h-4 text-gray-500" />
+        <div className="absolute bottom-4 right-0 bg-white p-2 rounded-full border border-neutral-200">
+          <ExternalLink className="w-4 h-4 text-neutral-500" />
         </div>
       )}
     </>

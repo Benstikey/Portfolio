@@ -34,12 +34,12 @@ const GridWithIcons: React.FC<GridWithIconsProps> = ({ stacks, iconSize = 64 }) 
       href={item.url}
       target="_blank"
       rel="noopener noreferrer"
-      className={`border rounded-lg p-4 flex items-center transition-all duration-300 ease-in-out hover:bg-gray-100 ${
+      className={`border border-neutral-200 rounded-lg p-2 flex items-center transition-all duration-300 ease-in-out hover:bg-neutral-100 ${
         showMore ? "opacity-100" : "opacity-0"
       }`}
       style={showMore ? { transitionDelay: `${idx * 100}ms` } : {}}
     >
-      <CustomIcon iconSlug={item.iconSlug} size={iconSize} className="mr-4" />
+      <CustomIcon iconSlug={item.iconSlug} size={iconSize} className="mr-4 ml-2" />
       <div className="flex flex-col text-left">
         <p className="text-gray-900">{item.name}</p>
         <p className="text-sm text-gray-500">{item.description}</p>

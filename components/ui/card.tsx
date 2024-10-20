@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 interface CardProps {
   title: string;
   description: string;
-  icon: React.ReactNode;
+  textContent: string; // New prop to replace icon
   children?: React.ReactNode;
 }
 
@@ -34,7 +34,7 @@ const Icon: React.FC<IconProps> = ({ className, corner }) => {
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth="1.5"
-      stroke="#334155"
+      stroke="#2e2e2e"
       className={className}
     >
       <path 
@@ -46,7 +46,7 @@ const Icon: React.FC<IconProps> = ({ className, corner }) => {
   );
 };
 
-const Card: React.FC<CardProps> = ({ title, description, icon, children }) => {
+const Card: React.FC<CardProps> = ({ title, description, textContent, children }) => {
   const [hovered, setHovered] = React.useState(false);
 
   return (
@@ -74,7 +74,7 @@ const Card: React.FC<CardProps> = ({ title, description, icon, children }) => {
 
       <div className="relative z-20">
         <div className="absolute inset-0 flex items-center justify-center text-center group-hover/canvas-card:-translate-y-4 group-hover/canvas-card:opacity-0 transition duration-200 w-full">
-          {icon}
+          <h2 className="text-3xl font-bold dark:text-white">{textContent}</h2>
         </div>
         <h2 className="dark:text-white text-xl mb-2 opacity-0 group-hover/canvas-card:opacity-100 relative z-10 text-black font-bold group-hover/canvas-card:text-white group-hover/canvas-card:-translate-y-2 transition duration-200">
           {title}

@@ -18,7 +18,7 @@ const SideNav = () => {
     const element = document.getElementById(id);
     if (element) {
       const start = window.pageYOffset;
-      const target = element.getBoundingClientRect().top + start - (id === 'work' || id === 'tldr' ? 0 : 124);
+      const target = element.getBoundingClientRect().top + start - 80; // 80px offset for all sections
       const startTime = performance.now();
       const duration = 1000;
 
@@ -41,22 +41,22 @@ const SideNav = () => {
   }, []);
 
   return (
-    <nav className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 hidden md:block">
-      <ul className="flex space-x-2 bg-white rounded-full shadow-lg px-4 py-2 border border-gray-200">
+    <nav className="fixed left-0 top-0 h-screen z-50 items-center hidden lg:flex">
+      <ul className="flex flex-col space-y-4 bg-white shadow-lg px-4 py-8 border-r border-gray-200 h-full justify-center">
         {sections.map((section) => (
           <li key={section.id} className="relative group">
             <a 
               href={`#${section.id}`}
               onClick={(e) => smoothScroll(e, section.id)}
-              className="text-gray-500 hover:text-gray-900 transition-colors duration-200 block p-2 group"
+              className="text-neutral-500 hover:text-neutral-900 transition-colors duration-200 block p-2 group"
             >
-              <section.icon size={20} className="group-hover:scale-110 transition-transform duration-200" />
+              <section.icon size={24} className="group-hover:scale-110 transition-transform duration-200" />
               <span className="sr-only">{section.label}</span>
-              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-in-out pointer-events-none">
-                <div className="bg-gray-800 text-white text-xs rounded-md py-1 px-2 whitespace-nowrap">
+              <div className="absolute left-full ml-2 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-in-out pointer-events-none">
+                <div className="bg-neutral-800 text-white text-xs rounded-md py-1 px-2 whitespace-nowrap">
                   {section.label}
                 </div>
-                <div className="w-2 h-2 bg-gray-800 transform rotate-45 absolute left-1/2 -translate-x-1/2 -bottom-1"></div>
+                <div className="w-2 h-2 bg-neutral-800 transform rotate-45 absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2"></div>
               </div>
             </a>
           </li>

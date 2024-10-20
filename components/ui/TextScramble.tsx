@@ -106,7 +106,7 @@ const TextScrambleComponent: React.FC = () => {
   };
 
   return (
-    <div style={{ minHeight: "200px", overflow: "hidden" }}>
+    <div style={{ minHeight: "110px", overflow: "hidden" }}>
       <p ref={(el) => setRef(el, 0)} style={{ margin: "0 0 4px 0" }}></p>
       <p ref={(el) => setRef(el, 1)} style={{ margin: "0 0 4px 0" }}></p>
       <p ref={(el) => setRef(el, 2)} style={{ margin: "0 0 4px 0" }}></p>
