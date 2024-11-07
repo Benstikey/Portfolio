@@ -102,6 +102,33 @@ body {
   font-style: italic;
 }
 
+/* Space Grotesk Font Faces */
+@font-face {
+  font-family: 'SpaceGrotesk';
+  src: url('/fonts/SpaceGrotesk-Regular.ttf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'SpaceGrotesk';
+  src: url('/fonts/SpaceGrotesk-Medium.ttf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'SpaceGrotesk';
+  src: url('/fonts/SpaceGrotesk-SemiBold.ttf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'SpaceGrotesk';
+  src: url('/fonts/SpaceGrotesk-Bold.ttf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+
 /* Satoshi Font Faces */
 @font-face {
   font-family: 'Satoshi';
@@ -168,7 +195,7 @@ body {
 
 /* Global typography styles */
 h1 {
-  font-family: 'GoiaDisplay', sans-serif;
+  font-family: 'SpaceGrotesk', sans-serif;
   font-weight: 500; /* Medium weight */
   font-size: 40px;
   line-height: 100%;
@@ -176,7 +203,7 @@ h1 {
 }
 
 h2 {
-  font-family: 'GoiaDisplay', sans-serif;
+  font-family: 'SpaceGrotesk', sans-serif;
   font-weight: 600; /* SemiBold weight */
   font-size: 20px;
   line-height: 100%;
